@@ -46,9 +46,10 @@
         if (!loggedInUser || userRole !== 'admin') {
             console.log('Redirecting to login page...');
             window.location.href = 'index.html'; // Redirect to login page
+        } else {
+            document.getElementById('username').textContent = loggedInUser;
+            loadPunishments(); // Load punishments only if authenticated
         }
-
-        document.getElementById('username').textContent = loggedInUser;
 
         function logout() {
             sessionStorage.clear();
@@ -82,9 +83,6 @@
                 loadPunishments();
             }
         }
-
-        // Load punishments when page loads
-        loadPunishments();
     </script>
 </body>
 </html> 
