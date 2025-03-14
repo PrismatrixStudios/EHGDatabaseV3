@@ -38,8 +38,14 @@
         const loggedInUser = sessionStorage.getItem('loggedInUser');
         const userRole = sessionStorage.getItem('userRole');
 
+        // Debugging: Log the values to the console
+        console.log('Logged In User:', loggedInUser);
+        console.log('User Role:', userRole);
+
+        // Redirect if not logged in or not an admin
         if (!loggedInUser || userRole !== 'admin') {
-            window.location.href = 'index.html';
+            console.log('Redirecting to login page...');
+            window.location.href = 'index.html'; // Redirect to login page
         }
 
         document.getElementById('username').textContent = loggedInUser;
