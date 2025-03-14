@@ -16,6 +16,9 @@
 
         <div class="punishment-list">
             <h2>All Punishments</h2>
+            <button onclick="exportData()">Export Data</button>
+            <input type="file" id="fileInput" style="display:none;" />
+            <button onclick="document.getElementById('fileInput').click();">Import Data</button>
             <table>
                 <thead>
                     <tr>
@@ -83,6 +86,30 @@
                 loadPunishments();
             }
         }
+
+        function exportData() {
+            const punishments = localStorage.getItem('punishments') || '[]';
+            const blob = new Blob([punishments], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'punishments.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const data = e.target.result;
+                    localStorage.setItem('punishments', data);
+                    loadPunishments(); // Reload the punishments after importing
+                };
+                reader.readAsText(file);
+            }
+        });
     </script>
 </body>
 </html> 
